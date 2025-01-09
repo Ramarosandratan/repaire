@@ -19,6 +19,9 @@ public class Computer {
     @Column(nullable = false)
     private String model;
 
+    @Column(nullable = false)
+    private String type;
+
     @Column(name = "serial_number", unique = true, nullable = false)
     private String serialNumber;
 

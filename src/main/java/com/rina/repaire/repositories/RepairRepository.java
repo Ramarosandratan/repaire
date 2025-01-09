@@ -34,4 +34,18 @@ public interface RepairRepository extends JpaRepository<Repair, Long> {
      */
     @Query("SELECT r FROM Repair r WHERE r.cost > :minCost")
     List<Repair> findByCostGreaterThan(@Param("minCost") double minCost);
+
+
+@Query("SELECT r FROM Repair r " +
+       "JOIN r.repairedComponents c")  // Utiliser la relation ManyToMany définie dans Repair
+List<Repair> findAllRepair();
+
+@Query("SELECT r FROM Repair r " +
+       "JOIN r.repairedComponents c "+
+       "where r.computer.type : 'GAMER'"+
+       "and r.repairedComponents.type: 'RAM'"+
+       "and r.type: 'UPGRADE' "
+       )  // Utiliser la relation ManyToMany définie dans Repair
+List<Repair> findAllRepair(@Param("minCost") double minCost);
+
 }

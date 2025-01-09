@@ -49,11 +49,12 @@ public class RepairService {
      */
 
     @Transactional
-    public Repair creatRepair(Repair repair, Long computerId, List<Long> componentIds) {
+    public Repair creatRepair(Repair repair, Long computerId, List<Long> componentIds,String type) {
         Computer computer = computerService.getComputerById(computerId);
         repair.setComputer(computer);
         repair.setDateCreated(LocalDateTime.now());
         repair.setStatus("PENDING");
+        repair.setType(type);
 
         List<Component> components = componentIds.stream()
                 .map(componentService::getComponentById)
@@ -90,6 +91,9 @@ public class RepairService {
                 .forEach(component -> componentService.updateComponentStatus(component.getId(), "REPAIRED"));
 
         return repairRepository.save(repair);
+    }
+    public List<Repair> getAllRepairs() {
+        return repairRepository.findAllRepair();
     }
 
     /**

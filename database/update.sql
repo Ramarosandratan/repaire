@@ -9,6 +9,8 @@ CREATE TYPE component_type AS ENUM ('CPU', 'RAM', 'STORAGE', 'MOTHERBOARD', 'GPU
 CREATE TYPE component_status AS ENUM ('FUNCTIONAL', 'DEFECTIVE', 'REPAIRED');
 CREATE TYPE computer_status AS ENUM ('FUNCTIONAL', 'NEEDS_REPAIR', 'IN_REPAIR', 'REPAIRED', 'RETURNED');
 CREATE TYPE repair_status AS ENUM ('WAITING_DIAGNOSTIC', 'DIAGNOSED', 'IN_REPAIR', 'REPAIRED', 'RETURNED');
+Create type computer_type as ENUM ('BUREAU', 'PORTABLE','GAMER');
+create type repair_type as ENUM ('UPGRADE','REPLACE','REPAIR');
 
 -- Create users table
 CREATE TABLE users (
@@ -25,6 +27,7 @@ CREATE TABLE computers (
     id BIGSERIAL PRIMARY KEY,
     brand VARCHAR(255) NOT NULL,
     model VARCHAR(255) NOT NULL,
+    type computer_type NOT NULL,
     serial_number VARCHAR(255) UNIQUE,
     status computer_status NOT NULL DEFAULT 'FUNCTIONAL',
     owner_id BIGINT NOT NULL,
@@ -51,6 +54,7 @@ CREATE TABLE repairs (
     date_diagnosed TIMESTAMP,
     date_completed TIMESTAMP,
     diagnosis TEXT,
+    type repair_type not null,
     status repair_status NOT NULL DEFAULT 'WAITING_DIAGNOSTIC',
     cost DECIMAL(10,2),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -80,12 +84,12 @@ INSERT INTO users (name, email, password, role) VALUES
 ('John Doe', 'john@example.com', 'password123', 'CLIENT'),
 ('Tech Store', 'store@repair.com', 'store123', 'STORE');
 
-INSERT INTO computers (brand, model, serial_number, status, owner_id) VALUES
-('Dell', 'XPS 15', 'DL001', 'FUNCTIONAL', 1),
-('HP', 'Pavilion', 'HP001', 'NEEDS_REPAIR', 1);
+INSERT INTO computers (brand, model,type, serial_number, status, owner_id) VALUES
+('Dell', 'XPS 15','BUREAU', 'DL001', 'FUNCTIONAL', 1),
+('HP', 'Pavilion','PORTABLE', 'HP001', 'NEEDS_REPAIR', 1);
 
 INSERT INTO components (name, type, status, computer_id) VALUES
-('Intel i7', 'CPU', 'FUNCTIONAL', 1),
-('Kingston 16GB', 'RAM', 'DEFECTIVE', 1),
-('Samsung 1TB', 'STORAGE', 'FUNCTIONAL', 2),
-('NVIDIA RTX 3060', 'GPU', 'DEFECTIVE', 2);
+('Intel i7', 'CPU', 'FUNCTIONAL', 2),
+('Kingston 16GB', 'RAM', 'DEFECTIVE', 2),
+('Samsung 1TB', 'STORAGE', 'FUNCTIONAL', 3),
+('NVIDIA RTX 3060', 'GPU', 'DEFECTIVE', 3);

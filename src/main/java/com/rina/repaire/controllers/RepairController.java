@@ -50,6 +50,13 @@ public class RepairController {
      * @param model      The model to add the computer and the list of components to.
      * @return The name of the view to render.
      */
+     @GetMapping("/list")
+    public String showCreateForm( Model model) {
+       model.addAttribute("repairs", repairService.getAllRepairs());
+        return "repairs/listAll";
+        
+    }
+
     @GetMapping("/new")
     public String showCreateForm(@RequestParam Long computerId, Model model) {
         model.addAttribute("repair", new Repair());
@@ -70,8 +77,9 @@ public class RepairController {
     public String createRepair(
             @ModelAttribute Repair repair,
             @RequestParam Long computerId,
-            @RequestParam List<Long> componentIds) {
-        repairService.creatRepair(repair, computerId, componentIds);
+            @RequestParam List<Long> componentIds,
+               @RequestParam String type) {
+        repairService.creatRepair(repair, computerId, componentIds,type);
         return "redirect:/repairs/computer/" + computerId;
     }
 

@@ -25,6 +25,14 @@
             <input type="text" class="form-control" th:field="*{model}" required>
         </div>
         <div class="mb-3">
+          <label class="form-label">Type</label>
+          <select class="form-control" name="type" th:field="*{type}" required>
+            <option value="BUREAU">Bureau</option>
+            <option value="PORTABLE">Portable</option>
+            <option value="GAMER">Gamer</option>
+          </select>
+        </div>
+        <div class="mb-3">
             <label class="form-label">Serial Number</label>
             <input type="text" class="form-control" th:field="*{serialNumber}" required>
         </div>

@@ -21,6 +21,9 @@ public class Repair {
     @Column(nullable = false)
     private String status;
 
+    @Column(nullable = false)
+    private String type;
+
     @Column(name = "date_created", nullable = false)
     private LocalDateTime dateCreated;
 
